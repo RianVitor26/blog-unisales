@@ -1,11 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import { createSession } from "../services/authService";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext({})
 
 export const AuthProvider = ({ children }) => {
-
+r
     const [user, setUser] = useState(null);
 
 
@@ -14,10 +13,10 @@ export const AuthProvider = ({ children }) => {
       }, []);
     
       const checkAuthentication = async () => {
-        const token = await AsyncStorage.getItem('token');
-        if (token) {
-          setUser({ token });
-        }
+        // Persistir o token
+        // if (token) {
+        //   setUser({ token });
+        // }
       };
 
     const login = async (email, password) => {
@@ -31,16 +30,16 @@ export const AuthProvider = ({ children }) => {
                 email: data.email,
                 token: data.token
             };
-            await AsyncStorage.setItem('token', data.token);
+            // Persistir o token
             setUser(user);
-            navigation.navigate('/admin');
+            // Navegar para admin
         }
     };
 
     const logout = async () => {
-        await AsyncStorage.removeItem('token');
+        // Remover o token
         setUser(null);
-        navigation.navigate('/auth/login');
+        // Navegar para login
       };
 
 
