@@ -1,25 +1,46 @@
-import { api } from './api'
+import { api } from './api';
 
 export const createPost = async (userId) => {
-    return await api.post(`users/${userId}/posts/`)
-}
+  try {
+    const createdPost = await api.post(`users/${userId}/posts`);
+    return createdPost.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const findAllPosts = async (userId) => {
-    const posts = await api.get(`users/${userId}/posts`)
-    return posts.data
-}
+  try {
+    const posts = await api.get(`users/${userId}/posts`);
+    return posts.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const findOnePost = async (userId, postId) => {
-    const post = await api.get(`users/${userId}/posts/${postId}`)
-    return post.data
-}
-
+  try {
+    const post = await api.get(`users/${userId}/posts/${postId}`);
+    return post.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const updatePost = async (userId, postId, newPost) => {
-    const updatedPost = await api.put(`users/${userId}/posts/${postId}`, newPost)
-    return updatedPost.data
-}
+  try {
+    const updatedUser = await api.put(`users/${userId}/posts/${postId}`, newPost);
+    return updatedUser.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const removePost = async (userId, postId) => {
-    return await api.delete(`users/${userId}/posts/${postId}`)
-}
+  try {
+    const removedUser = await api.delete(`users/${userId}/posts/${postId}`);
+    return removedUser.data;
+  } catch (error) {
+    throw error;
+  }
+};
