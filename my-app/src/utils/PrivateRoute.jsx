@@ -5,7 +5,7 @@ export const Private = ({ children }) => {
     const { isAuthenticated } = useContext(AuthContext)
 
     if(!isAuthenticated){
-        navigation.navigate('/auth/login');
+        // Navegar até login
     }
 
     return children;
