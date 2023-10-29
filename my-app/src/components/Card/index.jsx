@@ -1,7 +1,7 @@
 import { AspectRatio, Box, Center, HStack, Heading, Stack, Text } from "native-base";
 import { Image } from "react-native-svg";
 
-export const Card = ({ title, description, photoUrl, category, author }) => {
+export const Card = ({ title, description, photoUrl, category, author, content }) => {
     return (
         <Box alignItems="center">
             <Box
@@ -64,7 +64,7 @@ export const Card = ({ title, description, photoUrl, category, author }) => {
                             {author}
                         </Text>
                     </Stack>
-                    <Text fontWeight="400">{description}</Text>
+                    <Text fontWeight="400">desc: {description} content: {content}</Text>
                     <HStack alignItems="center" space={4} justifyContent="space-between">
                         <HStack alignItems="center">
                             <Text

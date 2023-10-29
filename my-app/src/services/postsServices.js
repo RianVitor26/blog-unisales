@@ -11,7 +11,7 @@ export const createPost = async (userId) => {
 
 export const findAllPosts = async () => {
   try {
-    const posts = await api.get(`posts/all`);
+    const posts = await api.get('/posts/all');
     return posts.data;
   } catch (error) {
     throw error;

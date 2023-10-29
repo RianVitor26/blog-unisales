@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import { Card } from '../../components/Card';
 import { findAllPosts } from '../../services/postsServices';
 
@@ -20,20 +20,20 @@ export default function Posts() {
     }
 
     fetchPosts();
-  }, [user]);
+  }, []);
 
   return (
     <View style={styles.container}>
-      <h1>Posts</h1>
+      <Text>Posts</Text>
       {isLoading ? (
-        <p>Carregando posts...</p>
+        <Text>Carregando posts...</Text>
       ) : (
         posts.map((post) => (
           <Card
             key={post.id}
             title={post.titulo}
             description={post.descricao}
-            date={post.data}
+            content={post.conteudo}
             author={post.autor}
             photoUrl={post.urlDaFoto}
             category={post.categoria}
