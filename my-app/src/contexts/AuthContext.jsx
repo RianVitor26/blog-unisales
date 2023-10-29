@@ -1,51 +1,56 @@
 import { createContext, useEffect, useState } from "react";
 import { createSession } from "../services/authService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
-export const AuthContext = createContext({})
+export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-r
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
+  const navigation = useNavigation();
 
+  useEffect(() => {
+    checkAuthentication();
+  }, []);
 
-    useEffect(() => {
-        checkAuthentication();
-      }, []);
-    
-      const checkAuthentication = async () => {
-        // Persistir o token
-        // if (token) {
-        //   setUser({ token });
-        // }
+  const checkAuthentication = async () => {
+    const token = await AsyncStorage.getItem("token");
+
+    if (token) {
+      setUser({ token });
+    }
+  };
+
+  const login = async (email, password) => {
+    const { data } = await createSession(email, password);
+
+    if (data && data.token) {
+      const user = {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        token: data.token,
       };
 
-    const login = async (email, password) => {
+      await AsyncStorage.setItem("token", user.token);
 
-        const { data } = await createSession(email, password)
+      setUser(user);
 
-        if (data && data.token) {
-            const user = {
-                id: data.id,
-                name: data.name,
-                email: data.email,
-                token: data.token
-            };
-            // Persistir o token
-            setUser(user);
-            // Navegar para admin
-        }
-    };
+      navigation.navigate("/admin");
+    }
+  };
 
-    const logout = async () => {
-        // Remover o token
-        setUser(null);
-        // Navegar para login
-      };
+  const logout = async () => {
+    await AsyncStorage.removeItem("token");
 
+    setUser(null);
 
-    return (
-        <AuthContext.Provider value={{ isAuthenticated: !!user, user, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    )
-}
+    navigation.navigate("/");
+  };
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated: !!user, user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
