@@ -9,7 +9,16 @@ export const createPost = async (userId) => {
   }
 };
 
-export const findAllPosts = async (userId) => {
+export const findAllPosts = async () => {
+  try {
+    const posts = await api.get(`posts/all`);
+    return posts.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const findUserPosts = async (userId) => {
   try {
     const posts = await api.get(`users/${userId}/posts`);
     return posts.data;
