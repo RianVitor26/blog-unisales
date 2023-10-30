@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     if (data && data.token) {
       const user = {
         id: data.id,
-        name: data.name,
+        name: data.nome,
         email: data.email,
         token: data.token,
       };
